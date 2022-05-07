@@ -1,4 +1,5 @@
 #!/bin/bash
 
 source .env
-scp index.html chalkboard-3840.png GochiHand-Regular.ttf olau@${HOST}:${DEST_DIR}
+exiftool -all= chalkboard-3084w.png
+scp index.html default.css bart.js chalkboard-3840w.png GochiHand-Regular.ttf olau@${HOST}:${DEST_DIR}
