@@ -9,25 +9,36 @@
 }
 body, html {
     background-color: #222;
+    color: #f8f8f8;
+    font-family: 'Gochi Hand', cursive;
 }
 #chalkboard {
     margin: 0 auto;
-    
 }
 #input-container {
-    width: 100%;
-    max-width: 40em;
     height: 32px;
 }
-#input-container input[type="text"] {
+#input-container > div {
+    display: inline-block;
+    margin-right: 1.5em;
+    padding-left: 10px;
+}
+input[type="text"], input[type="number"] {
+    display: inline-block;
     font-family: 'Gochi Hand', cursive;
-    font-size: 16px;
+    font-size: 20px;
     color: white;
     background-color: #222;
     border: 1px solid #f8f8f8;
-    width: 100%;
     height: 32px;
     padding: 3px 6px;
+}
+input[type="text"] {
+    min-width: 25em;
+}
+input[type="number"] {
+    text-align: center;
+    width: 4em;
 }
 #download-icon {
     position: fixed;
