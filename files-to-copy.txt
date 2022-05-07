@@ -1,4 +1,5 @@
 index.html
+images/chalkboard-3840w.png
 images/favicon-16.png
 images/favicon-32.png
 images/favicon-48.png
@@ -8,7 +9,6 @@ images/favicon-144.png
 images/favicon-168.png
 images/favicon-192.png
 favicon.ico
-default.css
-bart.js
-chalkboard-3840w.png
-GochiHand-Regular.ttf
+styles/default.css
+js/bart.js
+fonts/GochiHand-Regular.ttf

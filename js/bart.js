@@ -129,7 +129,7 @@
         canvas = document.querySelector('#chalkboard > canvas');
         ctx = canvas.getContext('2d');
         bgImg = (function(img) {
-            img.src = 'chalkboard-3840w.png';
+            img.src = 'images/chalkboard-3840w.png';
             return img;
         })(new Image());
         bgImg.onload = onResize;
