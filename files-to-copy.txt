@@ -7,6 +7,7 @@ images/favicon-96.png
 images/favicon-144.png
 images/favicon-168.png
 images/favicon-192.png
+favicon.ico
 default.css
 bart.js
 chalkboard-3840w.png
