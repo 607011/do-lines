@@ -12,3 +12,4 @@ favicon.ico
 styles/default.css
 js/bart.js
 fonts/GochiHand-Regular.ttf
+manifest.json
