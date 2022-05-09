@@ -2,7 +2,7 @@
 
 # .env must define the following variables:
 # HOST: the SSH target of the host to deploy to, e.g. username@www.example.com
-# DEST_DIR: the path to the directory on the host where to copy the files to
+# DEST_DIR: the path to the directory on the host where to copy the files to, e.g. /var/www/html
 
 source .env
 
