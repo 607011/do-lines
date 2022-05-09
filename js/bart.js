@@ -107,9 +107,9 @@
     }
 
     function onResize() {
-        const PAD_BOTTOM = 50;
+        const MARGIN_BOTTOM = 50;
         const imgAspectRatio = bgImg.naturalHeight / bgImg.naturalWidth;
-        const windowAspectRatio = (window.innerHeight - PAD_BOTTOM) / window.innerWidth;
+        const windowAspectRatio = (window.innerHeight - MARGIN_BOTTOM) / window.innerWidth;
         if (imgAspectRatio < windowAspectRatio) {
             canvas.width = container.clientWidth;
             canvas.height = Math.floor(container.clientWidth * imgAspectRatio);
@@ -117,8 +117,8 @@
             canvas.style.height = `${canvas.height}px`;
         }
         else {
-            canvas.width = Math.floor((window.innerHeight - PAD_BOTTOM) / imgAspectRatio);
-            canvas.height = window.innerHeight - PAD_BOTTOM;
+            canvas.width = Math.floor((window.innerHeight - MARGIN_BOTTOM) / imgAspectRatio);
+            canvas.height = window.innerHeight - MARGIN_BOTTOM;
             canvas.style.width = `${canvas.width}px`;
             canvas.style.height = `${canvas.height}px`;
         }
