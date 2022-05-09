@@ -1,7 +1,7 @@
 (function(window) {
     'use strict';
 
-    const PADDING = { LEFT: 20, RIGHT: 50, TOP: 30, BOTTOM: 60 };
+    const PADDING = { LEFT: 55, RIGHT: 250, TOP: 80, BOTTOM: 150 };
     const DEFAULT = {
         fontSize: JSON.parse(localStorage.getItem('bart_fontSize')) || 14,
         lineSpacing: JSON.parse(localStorage.getItem('bart_lineSpacing')) || 140,
@@ -21,17 +21,22 @@
 
     function draw() {
         ctx.drawImage(bgImg, 0, 0, canvas.clientWidth, canvas.clientHeight);
+        const topPadding = PADDING.TOP * canvas.clientHeight / bgImg.naturalHeight;
+        const rightPadding = PADDING.RIGHT * canvas.clientWidth / bgImg.naturalWidth;
+        const bottomPadding = PADDING.BOTTOM * canvas.clientHeight / bgImg.naturalHeight;
+        const leftPadding = PADDING.LEFT * canvas.clientWidth / bgImg.naturalWidth;
+        console.debug()
         if (input.value.length > 0) {
             ctx.font = `${hashParam.fontSize}px "Gochi Hand"`;
             const metrics = ctx.measureText(input.value);
-            const nColumns = Math.floor((canvas.clientWidth - PADDING.LEFT - PADDING.RIGHT) / (metrics.width + hashParam.columnGap));
+            const nColumns = Math.floor((canvas.clientWidth - leftPadding - rightPadding + hashParam.columnGap) / (metrics.width + hashParam.columnGap));
             const lineHeight = 1e-2 * hashParam.lineSpacing * (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent)
-            const nRows = Math.floor((canvas.clientHeight - PADDING.TOP - PADDING.BOTTOM) / lineHeight);
+            const nRows = Math.floor((canvas.clientHeight - topPadding - bottomPadding) / lineHeight);
             ctx.fillStyle = '#f8f8f8';
             for (let column = 0; column < nColumns; ++column) {
                 for (let row = 0; row < nRows; ++row) {
-                    const x = PADDING.LEFT + column * (hashParam.columnGap + metrics.width);
-                    const y = PADDING.TOP + row * lineHeight;
+                    const x = leftPadding + column * (hashParam.columnGap + metrics.width);
+                    const y = topPadding + row * lineHeight;
                     ctx.fillText(input.value, x, y);
                 }
             }
