@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo -e "\033[31;1mWARNING!\033[0m"
-echo "You should use \`grunt\` to deploy a new version."
+echo "You should use \`grunt\` in order to deploy a minified version of the code."
 read  -n 1 -p "Do you really want to deploy via this script? (y/N) " answer
 if [[ $answer != y ]]; then
     exit 0
