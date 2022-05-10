@@ -1,5 +1,6 @@
 index.html
 images/chalkboard-3840w.png
+images/bart.png
 images/favicon-16.png
 images/favicon-32.png
 images/favicon-48.png

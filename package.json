@@ -1,0 +1,36 @@
+{
+  "name": "do-lines",
+  "version": "1.0.0",
+  "description": "Let Bart Simpson do lines for you!",
+  "main": "Gruntfile.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raetselonkel/do-lines.git"
+  },
+  "keywords": [
+    "Fun"
+  ],
+  "author": "Oliver Lau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raetselonkel/do-lines/issues"
+  },
+  "homepage": "https://github.com/raetselonkel/do-lines#readme",
+  "dependencies": {
+    "grunt": "^1.5.2",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-htmlmin": "^3.1.0",
+    "grunt-contrib-uglify": "^5.2.1",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-processhtml": "^0.4.3",
+    "grunt-rsync": "^3.0.0"
+  }
+}

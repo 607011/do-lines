@@ -1,11 +1,10 @@
 (function(window) {
     'use strict';
 
-    const PADDING = { LEFT: 55, RIGHT: 250, TOP: 80, BOTTOM: 150 };
+    const PADDING = { LEFT: 55, RIGHT: 55, TOP: 80, BOTTOM: 130 };
     const DEFAULT = {
         fontSize: JSON.parse(localStorage.getItem('bart_fontSize')) || 14,
         lineSpacing: JSON.parse(localStorage.getItem('bart_lineSpacing')) || 140,
-        columnGap: JSON.parse(localStorage.getItem('bart_columnGap')) || 20,
         text: JSON.parse(localStorage.getItem('bart_text')) || 'I should document my code better!',
     }
     let hashParam = Object.assign({}, DEFAULT);
@@ -13,6 +12,7 @@
     let input = null;
     let container = null;
     let bgImg = null;
+    let bartImg = null;
     let canvas = null;
     let ctx = null;
     let fontSize = null;
@@ -20,25 +20,31 @@
     let columnGap = null;
 
     function draw() {
-        ctx.drawImage(bgImg, 0, 0, canvas.clientWidth, canvas.clientHeight);
-        const topPadding = PADDING.TOP * canvas.clientHeight / bgImg.naturalHeight;
-        const rightPadding = PADDING.RIGHT * canvas.clientWidth / bgImg.naturalWidth;
-        const bottomPadding = PADDING.BOTTOM * canvas.clientHeight / bgImg.naturalHeight;
-        const leftPadding = PADDING.LEFT * canvas.clientWidth / bgImg.naturalWidth;
-        console.debug()
-        if (input.value.length > 0) {
-            ctx.font = `${hashParam.fontSize}px "Gochi Hand"`;
-            const metrics = ctx.measureText(input.value);
-            const nColumns = Math.floor((canvas.clientWidth - leftPadding - rightPadding + hashParam.columnGap) / (metrics.width + hashParam.columnGap));
-            const lineHeight = 1e-2 * hashParam.lineSpacing * (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent)
-            const nRows = Math.floor((canvas.clientHeight - topPadding - bottomPadding) / lineHeight);
-            ctx.fillStyle = '#f8f8f8';
-            for (let column = 0; column < nColumns; ++column) {
-                for (let row = 0; row < nRows; ++row) {
-                    const x = leftPadding + column * (hashParam.columnGap + metrics.width);
-                    const y = topPadding + row * lineHeight;
-                    ctx.fillText(input.value, x, y);
+        if (bgImg) {
+            ctx.drawImage(bgImg, 0, 0, canvas.clientWidth, canvas.clientHeight);
+            if (input.value.length > 0) {
+                const topPadding = PADDING.TOP * canvas.clientHeight / bgImg.naturalHeight;
+                const rightPadding = PADDING.RIGHT * canvas.clientWidth / bgImg.naturalWidth;
+                const bottomPadding = PADDING.BOTTOM * canvas.clientHeight / bgImg.naturalHeight;
+                const leftPadding = PADDING.LEFT * canvas.clientWidth / bgImg.naturalWidth;
+                ctx.font = `${hashParam.fontSize}px "Gochi Hand"`;
+                const metrics = ctx.measureText(input.value);
+                const innerWidth = canvas.clientWidth - leftPadding - rightPadding;
+                const nColumns = Math.floor(innerWidth / metrics.width);
+                const gap = (innerWidth - nColumns * metrics.width) / (nColumns-1);
+                const lineHeight = 1e-2 * hashParam.lineSpacing * (metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent)
+                const nRows = Math.floor((canvas.clientHeight - topPadding - bottomPadding) / lineHeight);
+                ctx.fillStyle = '#f8f8f8';
+                for (let column = 0; column < nColumns; ++column) {
+                    for (let row = 0; row < nRows; ++row) {
+                        const x = leftPadding + column * (gap + metrics.width);
+                        const y = topPadding + row * lineHeight;
+                        ctx.fillText(input.value, x, y);
+                    }
                 }
+                const bartWidth = canvas.clientWidth / bgImg.naturalWidth * bartImg.naturalWidth;
+                const bartHeight = canvas.clientHeight / bgImg.naturalHeight * bartImg.naturalHeight;
+                ctx.drawImage(bartImg, canvas.clientWidth - bartWidth, canvas.clientHeight - bartHeight, bartWidth, bartHeight);
             }
         }
     }
@@ -66,10 +72,6 @@
         }
         if (data.lineSpacing && data.lineSpacing !== +lineSpacing.value) {
             lineSpacing.value = data.lineSpacing;
-            draw();
-        }
-        if (data.columnGap && data.columnGap !== +columnGap.value) {
-            columnGap.value = data.columnGap;
             draw();
         }
         updateHash(data);
@@ -101,11 +103,6 @@
         draw();
     }
 
-    function onColumnGapChange(_e) {
-        updateHash({columnGap: +columnGap.value});
-        draw();
-    }
-
     function onResize() {
         const MARGIN_BOTTOM = 50;
         const imgAspectRatio = bgImg.naturalHeight / bgImg.naturalWidth;
@@ -133,11 +130,17 @@
         container = document.querySelector('#chalkboard');
         canvas = document.querySelector('#chalkboard > canvas');
         ctx = canvas.getContext('2d');
-        bgImg = (function(img) {
-            img.src = 'images/chalkboard-3840w.png';
+        bartImg = (function(img) {
+            img.src = 'images/bart.png';
+            img.onload = function() {
+                bgImg = (function(img) {
+                    img.src = 'images/chalkboard-3840w.png';
+                    img.onload = onResize;
+                    return img;
+                })(new Image());
+            };
             return img;
         })(new Image());
-        bgImg.onload = onResize;
         window.addEventListener('resize', onResize);
         const downloadLink = document.querySelector('a#download');
         downloadLink.addEventListener('click', () => {
@@ -148,8 +151,6 @@
         fontSize.addEventListener('change', onFontSizeChange);
         lineSpacing = document.querySelector('#line-spacing');
         lineSpacing.addEventListener('change', onLineSpacingChange);
-        columnGap = document.querySelector('#column-gap');
-        columnGap.addEventListener('change', onColumnGapChange);
         evaluateHash();
     }
 
