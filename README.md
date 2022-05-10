@@ -2,7 +2,7 @@
 
 A simple web application to let Bart Simpson do lines for you. Type your confession and see the magic happen.
 
-![Bart Simpson at chalkboard](preview-1024w.jpg)
+![Bart Simpson at chalkboard](doc/preview-1024w.jpg)
 
 ## Installation
 
